@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="website description" />
+  <meta name="keywords" content="website keywords, website keywords" />
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+  {% if title %}
+  <title>Flask-блог - {{ title }}</title>
+  {% else %}
+  <title>Flask-блог</title>
+  {% endif %}
+
+  {% block head %} {% endblock head %}
+
+  {% include "incl_style.html" %}
+  {% block style %} {% endblock style %}
+</head>
+
+<body>
+
+  <div id="main">
+    <div id="header">
+      <div id="logo">
+        <!-- class="logo_colour", allows you to change the colour of the text -->
+        <h1><a href="/home">Flask<span class="logo_colour">_blog</span></a></h1>
+        {% if current_user.is_authenticated %}
+          <h2>Привет, {{ current_user.username }}!</h2>
+          <a class="navigation-links" href="{{ url_for('user_apl.account') }}">Профиль</a>
+          <a class="navigation-links" href="{{ url_for('user_apl.logout') }}">Выйти</a>
+          <a class="navigation-links" href="{{ url_for('blog_apl.new_post') }}"><i class="fa fa-plus"></i> New Post</a>
+        {% else %}
+          <h2>Привет, незнакомец!</h2>
+          <a class="navigation-links" href="{{ url_for('user_apl.login') }}">Войти</a>
+          <a class="navigation-links" href="{{ url_for('user_apl.register') }}">Зарегистрироваться</a>
+        {% endif %}
+      </div>
+    </div>
+
+    {% block content %}{% endblock content %}
+
+    </div>
+    <div id="footer">
+      <p>Copyright &copy; simple_light | <a href="http://validator.w3.org/check?uri=referer">HTML5</a> | <a href="http://jigsaw.w3.org/css-validator/check/referer">CSS</a> | <a href="http://www.html5webtemplates.co.uk">design from HTML5webtemplates.co.uk</a></p>
+    </div>
+  </div>
+
+  <main role="main" class="container">
+    <div class="row">
+      <div class="col-md-10">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }}">
+          {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+      </div>
+    </div>
+  </main>
+
+</body>
+
+</html>
