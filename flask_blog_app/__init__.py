@@ -3,11 +3,12 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_bcrypt import Bcrypt
 from flask_blog_app.config import Config
-# from flask_blog_app.main.routes import main
+from flask_mail import Mail
 
 db = SQLAlchemy()
 login_manager = LoginManager()
 bcrypt = Bcrypt()
+mail = Mail()
 
 def create_app():
     # print(f'---------\n<NAME> : {__name__}\n---------')
@@ -17,6 +18,7 @@ def create_app():
     db.init_app(app)
     login_manager.init_app(app)
     bcrypt.init_app(app)
+    mail.init_app(app)
 
     from flask_blog_app.main.routes import main
     app.register_blueprint(main)
