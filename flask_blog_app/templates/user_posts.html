@@ -5,6 +5,7 @@
 
 {% include "incl_menubar.html" %}
 
+<div id="site_content">
 {% include "incl_sidebar.html" %}
 
 <h1 class="mb-3">Посты опубликованы пользователем {{ user.username }} ({{ posts.total }})</h1>
@@ -44,5 +45,5 @@
     ...
   {% endif %}
 {% endfor %}
-
+</div>
 {% endblock content %}

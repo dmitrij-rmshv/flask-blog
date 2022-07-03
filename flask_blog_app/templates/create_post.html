@@ -5,6 +5,7 @@
 
 {% include "incl_menubar.html" %}
 
+<div id="site_content">
 <div id="content">
   <form method="POST" action="">
     {{ form.hidden_tag() }}
@@ -39,5 +40,6 @@
       {{ form.submit(class="btn btn-outline-info") }}
     </div>
   </form>
+</div>
 </div>
 {% endblock content %}

@@ -5,6 +5,7 @@
 
 {% include "incl_menubar.html" %}
 
+<div id="site_content">
 {% include "incl_sidebar.html" %}
 
 {% for post in posts.items %}
@@ -44,5 +45,5 @@
     ...
   {% endif %}
 {% endfor %}
-
+</div>
 {% endblock content %}

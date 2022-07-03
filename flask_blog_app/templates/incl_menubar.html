@@ -1,25 +1,28 @@
 <div id="menubar">
-    <ul id="menu">
-      <!-- put class="selected" in the li tag for the selected page - to highlight which page you're on -->
-      <!-- <li {% if (current_page=='home') %} class="selected" {% endif %}><a href="/home">Home</a></li> -->
-      <!-- <li><a href="/examples">Examples</a></li> -->
-      {% if current_user.is_authenticated %}
-        {% if (current_page=='post') %}
-        <li><a href="/allposts">Вернуться ко всем постам</a></li>
-        {% endif %}
-        {% if (current_page=='allposts') %}
-        <li  class="selected"><a href="/allposts">Читаем посты</a></li>
-        {% elif (current_page=='bloger_posts') %}
-        <li><a href="/allposts">Вернуться ко всем постам</a></li>
-        <li class="selected"><a href="/bloger_posts">Читаем посты пользователя {{ user.username }}</a></li>
-        {% endif %}
-
-      {% else %}
-      <li {% if (current_page=='home') %} class="selected" {% endif %}><a href="/home">Home</a></li>
-      <li><a href="/register">Регистрация</a></li>
-      <li><a href="/login">Авторизация</a></li>
+  <ul id="menu">
+    <!-- put class="selected" in the li tag for the selected page - to highlight which page you're on -->
+    <!-- <li {% if (current_page=='home') %} class="selected" {% endif %}><a href="/home">Home</a></li> -->
+    <!-- <li><a href="/examples">Examples</a></li> -->
+    {% if current_user.is_authenticated %}
+      {% if (current_page=='post') %}
+      <li><a href="/allposts">Вернуться ко всем постам</a></li>
       {% endif %}
-      <li><a href="/contact">Contact Us</a></li>
-    </ul>
-  </div>
-<div id="site_content">
+      {% if (current_page=='allposts') %}
+      <li  class="selected"><a href="/allposts">Читаем посты</a></li>
+      {% elif (current_page=='bloger_posts') %}
+      <li class="selected"><a href="/bloger_posts">Читаем посты пользователя {{ user.username }}</a></li>
+      {% endif %}
+      {% if ('post' not in current_page) %}
+      <li><a href="/allposts">Вернуться к просмотру</a></li>
+      {% endif %}
+
+
+    {% else %}
+    <li {% if (current_page=='home') %} class="selected" {% endif %}><a href="/home">Home</a></li>
+    <li {% if (current_page=='register') %} class="selected" {% endif %}><a href="/register">Регистрация</a></li>
+    <li {% if (current_page=='login') %} class="selected" {% endif %}><a href="/login">Авторизация</a></li>
+    {% endif %}
+    <li><a href="/contact">Contact Us</a></li>
+  </ul>
+</div>
+<!-- <div id="site_content"> -->
