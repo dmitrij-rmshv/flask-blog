@@ -10,7 +10,7 @@
       {% if (current_page=='allposts') %}
       <li  class="selected"><a href="/allposts">Читаем посты</a></li>
       {% elif (current_page=='bloger_posts') %}
-      <li class="selected"><a href="/bloger_posts">Читаем посты пользователя {{ user.username }}</a></li>
+      <li><a href="/allposts">Вернуться ко всем постам</a></li>
       {% endif %}
       {% if ('post' not in current_page) %}
       <li><a href="/allposts">Вернуться к просмотру</a></li>
