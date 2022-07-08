@@ -1,8 +1,12 @@
 {% extends "layout.html" %}
 
 {% block content %}
-    <div id="content" class="content-section">
-        <h1>Что-то пошло не так (500)</h1>
-        <p>У нас проблемы. Пожалуйста, попробуйте еще раз в ближайшее время</p>
-    </div>
+
+{% include "incl_menubar.html" %}
+
+<div id="site_content">
+  <h1>Что-то пошло не так (500)</h1>
+  <p>У нас проблемы. Пожалуйста, попробуйте еще раз в ближайшее время</p>
+</div>
+
 {% endblock content %}
