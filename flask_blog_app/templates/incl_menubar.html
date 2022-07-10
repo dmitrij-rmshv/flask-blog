@@ -22,7 +22,6 @@
     <li {% if (current_page=='register') %} class="selected" {% endif %}><a href="/register">Регистрация</a></li>
     <li {% if (current_page=='login') %} class="selected" {% endif %}><a href="/login">Авторизация</a></li>
     {% endif %}
-    <li><a href="/contact">Contact Us</a></li>
+    <li {% if (current_page=='contact') %} class="selected" {% endif %}><a href="/contact">Contact Us</a></li>
   </ul>
 </div>
-<!-- <div id="site_content"> -->

@@ -17,14 +17,9 @@ class RegForm(FlaskForm):
 
     def validate_username(self, username):
         user = User.query.filter_by(username=username.data).first()
-        print(
-            f'---------\n<USER> : {user}\n<UserList> : {User.query.filter_by(username=username.data)}\n<BoolUserList> : {bool(User.query.filter_by(username=username.data))}\n---------')
         if user:
             raise ValidationError(
                 'Это имя занято. Пожалуйста, выберите другое.')
-        # if User.query.filter_by(username=username.data):
-        #     print(f'---------\n<NAME> : {__name__}\n---------')
-        #     raise ValidationError('Это имя занято. Пожалуйста, выберите другое.')
 
     def validate_email(self, email):
         user = User.query.filter_by(email=email.data).first()

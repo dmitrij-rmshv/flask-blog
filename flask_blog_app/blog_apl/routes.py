@@ -23,8 +23,8 @@ def postslist():
 def new_post():
     form = NewPostForm()
     if form.validate_on_submit():
-        post = Post(title=form.title.data,
-                    content=form.content.data, author=current_user)
+        post = Post(title=form.title.data, content=form.content.data,
+                    lemma=form.lemma.data, author=current_user)
         db.session.add(post)
         db.session.commit()
         flash('Ваш пост создан', 'success')
@@ -48,12 +48,14 @@ def post_update(post_id):
     if form.validate_on_submit():
         post.title = form.title.data
         post.content = form.content.data
+        post.lemma = form.lemma.data
         db.session.commit()
         flash('Ваш пост отредактирован', 'success')
         return redirect(url_for('blog_apl.post', post_id=post.id))
     elif request.method == 'GET':
         form.title.data = post.title
         form.content.data = post.content
+        form.lemma.data = post.lemma
     return render_template('create_post.html', title='Обновление поста', form=form, legend='Обновление поста', current_page='reduction')
 
 
