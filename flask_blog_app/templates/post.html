@@ -6,7 +6,7 @@
 
 <div id="site_content">
 
-  {% include "incl_sidebar.html" %}
+  <!-- {% include "incl_sidebar.html" %} -->
 
   <div class="container" style="display: flex;">
     <article class="media" style="display: flex; flex-direction: column;">
@@ -24,22 +24,55 @@
         <br>
         <p class="card-text">{{ post.content }}</p>
       </div>
-      <div class="card-footer" style="font-size: 20px;">
-        <!-- <i class="fa fa-heart-o"></i>
-      <i class="fa fa-bookmark-o"></i> -->
-        {% if post.author == current_user %}
-        <div class="card-footer" style="font-size: 20px;">
-          <!-- {% if post.author == current_user %} -->
-          <a class="btn btn-secondary btn-sm mt-1 mb-1"
-            href="{{url_for('blog_apl.post_update', post_id=post.id) }}">Обновить</a>
-          <form action="{{ url_for('blog_apl.delete_post', post_id=post.id) }}" method="POST">
-            <input class="btn btn-danger" type="submit" value="Удалить">
-          </form>
-          <!-- <button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal" data-target="#deleteModal">Удалить</button> -->
-          <!-- {% endif %} -->
+
+      <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        <legend class="border-bottom mb-4">{{ legend }}</legend>
+  
+        <div class="form-group">
+          {{ form.text.label(class="form-control-label") }}
+          {% if form.text.errors %}
+          {{ form.text(class="form-control form-control-lg is-invalid") }}
+          <div class="invalid-feedback">
+            {% for error in form.text.errors %}
+            <span>{{ error }}</span>
+            {% endfor %}
+          </div>
+          {% else %}
+          {{ form.text(class="form-control form-control-lg") }}
+          {% endif %}
         </div>
-        {% endif %}
+      
+        <div class="form-group">
+          {{ form.submit(class="btn btn-outline-info") }}
+        </div>    
+      </form>
+      <p></p>
+    
+      {% for comment in post.comments | reverse %}
+        {% if comment == post.comments[-1] %} <h4><u>Комментарии :</u></h4> {% endif %}
+        {{ comment.text }}
+        <small>{{ comment.commentator}}   ( {{ comment.timestamp.strftime('%A, %d %B %Y %I:%M %p') }} )</small>
+        <!-- сделать удаление -->
+        <hr>
+      {% endfor %}
+      <p></p>
+
+      {% if post.author == current_user %}
+      <div class="post-redo">
+        <div>
+          <a class="btn btn-secondary btn-sm mt-1 mb-1"
+            href="{{url_for('blog_apl.post_update', post_id=post.id) }}">Обновить пост</a>
+        </div>
+        <div>
+          <form action="{{ url_for('blog_apl.delete_post', post_id=post.id) }}" method="POST">
+            <input class="btn btn-danger" type="submit" value="Удалить пост">
+          </form>
+        </div>
+        <!-- <button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal" data-target="#deleteModal">Удалить</button> -->
       </div>
+      {% endif %}
+  
     </div>
   </div>
 

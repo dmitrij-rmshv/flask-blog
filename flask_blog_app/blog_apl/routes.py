@@ -2,8 +2,8 @@ from flask import render_template, url_for, flash, redirect, request, abort, Blu
 from flask_login import current_user, login_required
 
 from flask_blog_app import db
-from flask_blog_app.models import Post
-from flask_blog_app.blog_apl.forms import NewPostForm
+from flask_blog_app.models import Post, Comment
+from flask_blog_app.blog_apl.forms import NewPostForm, CommentForm
 
 posts = Blueprint('blog_apl', __name__)
 print(f'-----\nBlueprint("blog_apl", __name__) :   {__name__}\n------')
@@ -32,10 +32,18 @@ def new_post():
     return render_template('create_post.html', title='Новый пост', form=form, legend='Новый пост', current_page='Редактирование')
 
 
-@posts.route("/post/<int:post_id>")
+@posts.route("/post/<int:post_id>", methods=['GET', 'POST'])
 def post(post_id):
     post = Post.query.get_or_404(post_id)
-    return render_template('post.html', title=post.title, post=post, current_page='post')
+    form = CommentForm()
+    if form.validate_on_submit():
+        comment = Comment(text=form.text.data, post_id=post_id, commentator=current_user.username)
+        db.session.add(comment)
+        db.session.commit()
+        flash('Ваш комментарий добавлен', 'success')
+        return redirect(f'/post/{post_id}')
+        # return redirect(url_for('/post/{post_id}'))
+    return render_template('post.html', title=post.title, post=post, form=form, current_page='post')
 
 
 @posts.route("/post/<int:post_id>/update", methods=['GET', 'POST'])

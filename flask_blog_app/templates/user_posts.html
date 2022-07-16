@@ -27,10 +27,9 @@
         <br>
         <p class="card-text">{{ post.lemma if post.lemma else post.content[:128] }}</p>
       </div>
-      <!-- <div class="card-footer" style="font-size: 20px;">
-      <i class="fa fa-heart-o"></i>
-      <i class="fa fa-bookmark-o"></i>
-    </div> -->
+      {% if post.comments_number(post.id) %}
+      <small>Комментарии: {{ post.comments_number(post.id) }}</small>
+      {% endif %}
     </div>
   </div>
   {% endfor %}

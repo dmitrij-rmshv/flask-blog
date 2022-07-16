@@ -1,4 +1,6 @@
+from cgitb import text
 from datetime import datetime
+from email.policy import default
 
 from flask import current_app
 from flask_login import UserMixin 
@@ -47,6 +49,18 @@ class Post(db.Model):
     content = db.Column(db.Text, nullable=False)
     lemma = db.Column(db.String(128))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    comments = db.relationship('Comment', backref='title', lazy='dynamic')
+
+    def comments_number(self, post_id):
+        return Comment.query.filter_by(post_id=post_id).count()
 
     def __repr__(self):
         return f"Запись('{self.title}', '{self.date_posted}')"
+    
+
+class Comment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    text = db.Column(db.String(255))
+    timestamp = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    post_id = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=False)
+    commentator = db.Column(db.String, db.ForeignKey('user.username'), nullable=False)
